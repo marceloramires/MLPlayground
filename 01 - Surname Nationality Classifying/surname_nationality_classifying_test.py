@@ -21,6 +21,6 @@ def test_model():
         for loss, category in predictions:
             print('(%.3f) %s' % (loss, category))
 
-#train_model()
-load_saved_model()
+train_model()
+#load_saved_model()
 test_model()
