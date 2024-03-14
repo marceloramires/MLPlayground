@@ -16,23 +16,11 @@ def load_saved_model():
 def test_model():
     while True:
         name = input("Type a name: ")
-        model.predict(name)
+        print('\n> %s' % name)
+        predictions = model.predict(name)
+        for loss, category in predictions:
+            print('(%.3f) %s' % (loss, category))
 
 #train_model()
 load_saved_model()
 test_model()
-
-
-# model = SurnameNationalityClassifyingModel()
-# datasets_path = '../datasets/surnames_by_nationality/*.txt'
-# #model.load_dataset(datasets_path)
-# model.load_categories(datasets_path)
-# model.initialize_model()
-# #model.train()
-# model_path = 'surname_nationality_model_state.pt'
-# #model.save_model(model_path)
-# model.load_saved_model(model_path)
-
-# while True:
-#     name = input("Type a name: ")
-#     model.predict(name)

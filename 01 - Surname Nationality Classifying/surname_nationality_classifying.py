@@ -44,6 +44,9 @@ class SurnameNationalityClassifyingModel:
             category = os.path.splitext(os.path.basename(filename))[0]
             self.all_categories.append(category)
         self.n_categories = len(self.all_categories)
+
+    def get_categories(self):
+        return self.all_categories
     
     def load_dataset(self, dataset_path):
         for filename in self.findFiles(dataset_path):
@@ -63,7 +66,6 @@ class SurnameNationalityClassifyingModel:
         return output
 
     def predict(self, name, n_predictions=3):
-        print('\n> %s' % name)
         with torch.no_grad():
             output = self.evaluate(self.lineToTensor(name))
 
@@ -74,8 +76,8 @@ class SurnameNationalityClassifyingModel:
             for i in range(n_predictions):
                 value = topv[0][i].item()
                 category_index = topi[0][i].item()
-                print('(%.2f) %s' % (value, self.all_categories[category_index]))
                 predictions.append([value, self.all_categories[category_index]])
+        return predictions
 
     def findFiles(self, path): 
         return glob.glob(path)
