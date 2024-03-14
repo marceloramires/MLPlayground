@@ -31,19 +31,21 @@ class SurnameNationalityClassifyingModel:
         self.category_lines = {}
         self.all_categories = []
 
-    def load_saved_model(self, state_path):
-        self.rnn = RNN(n_letters, n_hidden, self.n_categories)
-        self.rnn.load_state_dict(torch.load(state_path))
-        self.rnn.eval()
-
-    def save_model(self, state_path):
-        torch.save(self.rnn.state_dict(), state_path)
-
-    def load_categories(self, dataset_path):
-        for filename in self._find_files(dataset_path):
-            category = os.path.splitext(os.path.basename(filename))[0]
-            self.all_categories.append(category)
+    def load_saved_model(self, state_path: str):
+        checkpoint = torch.load(state_path)
+        
+        self.all_categories = checkpoint['categories']
         self.n_categories = len(self.all_categories)
+
+        self.rnn = RNN(n_letters, n_hidden, self.n_categories)
+        self.rnn.load_state_dict(checkpoint['model_state_dict'])
+        self.rnn.eval()
+        
+    def save_model(self, state_path: str):
+        torch.save({
+            'categories': self.all_categories,
+            'model_state_dict': self.rnn.state_dict(),
+            }, state_path)
 
     def get_categories(self):
         return self.all_categories
