@@ -9,7 +9,6 @@ import random
 import time
 import math
 import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
 
 # Parameters to load datasets
 all_letters = string.ascii_letters + " .,;'"
