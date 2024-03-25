@@ -1,0 +1,14 @@
+{
+    "builds": [
+        { 
+            "src": "surname_nationality_classifying_service.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        { 
+            "src": "/(.*)",
+            "dest": "api/main.py"
+        }
+    ]
+  }
